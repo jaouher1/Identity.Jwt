@@ -12,57 +12,39 @@ namespace Identity.JwtToken.ExtensionsService
 {
     public static class IdentityService
     {
-        public static void AddIdentityJwt(this IServiceCollection services, IConfiguration configuration, Options opt = null)
+        public static void AddIdentityJwt(this IServiceCollection services, IConfiguration configuration , Options opt = null)
         {
 
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
+                    builder => builder
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowAnyOrigin()
                         .Build());
             });
 
-
+            
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
 
-            _ = opt == null
-                ? services.AddAuthentication(x =>
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                }).AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = configuration["Jwt:Issuer"],
-                        ValidAudience = configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
-                    };
-                })
-                : services.AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                }).AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = opt.ValidateIssuer,
-                        ValidateAudience = opt.ValidateAudience,
-                        ValidateLifetime = opt.ValidateLifetime,
-                        ValidateIssuerSigningKey = opt.ValidateIssuerSigningKey,
-                        ValidIssuer = configuration["Jwt:Issuer"],
-                        ValidAudience = configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
-                    };
-                });
+                    ValidateIssuer = opt?.ValidateIssuer ?? false,
+                    ValidateAudience = opt?.ValidateIssuer ?? false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true, 
+                    ValidIssuer = configuration[ opt?.ConfIssuerPath ?? "Jwt:Issuer"],
+                    ValidAudience = configuration[opt?.ConfAudiencePath ?? "Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[opt?.ConfKeyPath ?? "Jwt:Key"]))
+                };
+            });
 
         }
 
