@@ -1,0 +1,8 @@
+C:\Users\peakcs\source\repos\Identity.JwtToken\Identity.JwtToken\bin\Debug\netstandard2.0\Identity.JwtToken.deps.json
+C:\Users\peakcs\source\repos\Identity.JwtToken\Identity.JwtToken\bin\Debug\netstandard2.0\Identity.JwtToken.dll
+C:\Users\peakcs\source\repos\Identity.JwtToken\Identity.JwtToken\obj\Debug\netstandard2.0\Identity.JwtToken.csprojAssemblyReference.cache
+C:\Users\peakcs\source\repos\Identity.JwtToken\Identity.JwtToken\obj\Debug\netstandard2.0\Identity.JwtToken.AssemblyInfoInputs.cache
+C:\Users\peakcs\source\repos\Identity.JwtToken\Identity.JwtToken\obj\Debug\netstandard2.0\Identity.JwtToken.AssemblyInfo.cs
+C:\Users\peakcs\source\repos\Identity.JwtToken\Identity.JwtToken\bin\Debug\netstandard2.0\Identity.JwtToken.pdb
+C:\Users\peakcs\source\repos\Identity.JwtToken\Identity.JwtToken\obj\Debug\netstandard2.0\Identity.JwtToken.dll
+C:\Users\peakcs\source\repos\Identity.JwtToken\Identity.JwtToken\obj\Debug\netstandard2.0\Identity.JwtToken.pdb
