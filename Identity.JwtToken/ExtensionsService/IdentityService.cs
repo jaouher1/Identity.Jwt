@@ -25,7 +25,6 @@ namespace Identity.JwtToken.ExtensionsService
                         .Build());
             });
 
-            
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
 
             services.AddAuthentication(x =>
@@ -36,11 +35,11 @@ namespace Identity.JwtToken.ExtensionsService
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = opt?.ValidateIssuer ?? false,
-                    ValidateAudience = opt?.ValidateIssuer ?? false,
+                    ValidateIssuer = opt?.ValidateIssuer != null ,
+                    ValidateAudience = opt?.ValidateIssuer != null,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true, 
-                    ValidIssuer = configuration[ opt?.ConfIssuerPath ?? "Jwt:Issuer"],
+                    ValidIssuer = configuration[ opt?.ConfIssuerPath ?? "Jwt:Issuer" ],
                     ValidAudience = configuration[opt?.ConfAudiencePath ?? "Jwt:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[opt?.ConfKeyPath ?? "Jwt:Key"]))
                 };
